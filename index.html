@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Medication Management</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+th, td {
+  border: 1px solid #dddddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}
+  </style>
+</head>
+<body>
+  <h1>Medication Management</h1>
+  <div id="medication-list"></div>
+  <script>
+    // Fetch list of all medications
+    fetch('/medication')
+      .then(response => response.json())
+      .then(data => {
+        // Display medication information in a table with update buttons
+        let table = '<table><tr><th>Name</th><th>Dosage</th><th>Price</th><th>Availability</th><th>Actions</th></tr>';
+        for (let medicationId in data) {
+          let medication = data[medicationId];
+          table += `<tr><td>${medication.name}</td><td>${medication.dosage}</td><td>${medication.price}</td><td>${medication.inStock}</td>
+                    <td>
+                      <button onclick="updatePrice('${medicationId}')">Update Price</button>
+                      <button onclick="updateAvailability('${medicationId}')">Update Availability</button>
+                    </td>
+                    </tr>`;
+        }
+        table += '</table>';
+        document.getElementById('medication-list').innerHTML = table;
+      });
+    // Function to update the price of a medication
+    function updatePrice(medicationId) {
+      const newPrice = prompt("Enter the new price:");
+      fetch(`/medication/${medicationId}/price`, {
+        method: 'PUT',
+        body: JSON.stringify({ price: newPrice }),
+        headers: { 'Content-Type': 'application/json' }
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert(data.message);
+          location.reload();
+        });
+    }
+    // Function to update the availability of a medication
+    function updateAvailability(medicationId) {
+      const newAvailability = confirm("Is the medication in stock?");
+      fetch(`/medication/${medicationId}/availability`, {
+        method: 'PUT',
+        body: JSON.stringify({ inStock: newAvailability }),
+        headers: { 'Content-Type': 'application/json' }
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert(data.message);
+          location.reload();
+        });
+    }
+  </script>
+</body>
+</html>

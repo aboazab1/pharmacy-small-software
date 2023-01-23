@@ -1,0 +1,26 @@
+{
+  "name": "pharmacy-small-software",
+  "version": "1.0.0",
+  "description": "This is a Node.js script that uses the Express.js framework to create a web server.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aboazab1/pharmacy-small-software.git"
+  },
+  "keywords": [
+    "Node.js"
+  ],
+  "author": "abdelrahman adel alazab",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aboazab1/pharmacy-small-software/issues"
+  },
+  "homepage": "https://github.com/aboazab1/pharmacy-small-software#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2"
+  }
+}
